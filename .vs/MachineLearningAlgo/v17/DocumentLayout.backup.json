@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3D570AAC-0325-41F7-8389-529B3930C9D9}|MLBackTest\\MLBackTest.csproj|c:\\users\\himanshu\\source\\repos\\machinelearningalgo\\mlbacktest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D570AAC-0325-41F7-8389-529B3930C9D9}|MLBackTest\\MLBackTest.csproj|solutionrelative:mlbacktest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2672D303-254C-481B-B8A5-93EBAAE6D1C8}|MLTrading\\MLTrading.csproj|c:\\users\\himanshu\\source\\repos\\machinelearningalgo\\mltrading\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2672D303-254C-481B-B8A5-93EBAAE6D1C8}|MLTrading\\MLTrading.csproj|solutionrelative:mltrading\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB517D0E-5E07-4936-8731-75A95BF3B66B}|MachineLearningProcessor\\MachineLearningProcessor.csproj|c:\\users\\himanshu\\source\\repos\\machinelearningalgo\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EB517D0E-5E07-4936-8731-75A95BF3B66B}|MachineLearningProcessor\\MachineLearningProcessor.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB517D0E-5E07-4936-8731-75A95BF3B66B}|MachineLearningProcessor\\MachineLearningProcessor.csproj|c:\\users\\himanshu\\source\\repos\\machinelearningalgo\\machinelearningprocessor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB517D0E-5E07-4936-8731-75A95BF3B66B}|MachineLearningProcessor\\MachineLearningProcessor.csproj|solutionrelative:machinelearningprocessor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2672D303-254C-481B-B8A5-93EBAAE6D1C8}|MLTrading\\MLTrading.csproj|c:\\users\\himanshu\\source\\repos\\machinelearningalgo\\mltrading\\tradingengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2672D303-254C-481B-B8A5-93EBAAE6D1C8}|MLTrading\\MLTrading.csproj|solutionrelative:mltrading\\tradingengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 246,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLBackTest\\Program.cs",
+              "RelativeDocumentMoniker": "MLBackTest\\Program.cs",
+              "ToolTip": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLBackTest\\Program.cs",
+              "RelativeToolTip": "MLBackTest\\Program.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowCgAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-21T22:25:52.34Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLTrading\\Program.cs",
+              "RelativeDocumentMoniker": "MLTrading\\Program.cs",
+              "ToolTip": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLTrading\\Program.cs",
+              "RelativeToolTip": "MLTrading\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-17T20:18:32.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-16T03:00:08.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MachineLearningProcessor\\Program.cs",
+              "RelativeDocumentMoniker": "MachineLearningProcessor\\Program.cs",
+              "ToolTip": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MachineLearningProcessor\\Program.cs",
+              "RelativeToolTip": "MachineLearningProcessor\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-15T00:15:43.105Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TradingEngine.cs",
+              "DocumentMoniker": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLTrading\\TradingEngine.cs",
+              "RelativeDocumentMoniker": "MLTrading\\TradingEngine.cs",
+              "ToolTip": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLTrading\\TradingEngine.cs",
+              "RelativeToolTip": "MLTrading\\TradingEngine.cs",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAAwJIAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-05T12:49:04.861Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

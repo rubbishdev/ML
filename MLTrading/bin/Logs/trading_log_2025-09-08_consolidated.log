@@ -1,0 +1,797 @@
+--- Algorithmic Trading Bot ---
+Starting trading engine. Press Ctrl+C to stop.
+Market is closed. Waiting for next open in 0d 0h 8m...
+Market is closed. Waiting for next open in 0d 0h 7m...
+Market is closed. Waiting for next open in 0d 0h 6m...
+Market is closed. Waiting for next open in 0d 0h 5m...
+Market is closed. Waiting for next open in 0d 0h 4m...
+Market is closed. Waiting for next open in 0d 0h 3m...
+Market is closed. Waiting for next open in 0d 0h 2m...
+Market is closed. Waiting for next open in 0d 0h 1m...
+Market is closed. Waiting for next open in 0d 0h 0m...
+Market is open. Starting trading engine...
+09:30:29 ET | Polling... | Prediction: Hold
+09:31:00 ET | Polling... | Prediction: Sell
+09:31:00 ET | SIGNAL: SELL | Submitting market order for 428 shares.
+09:31:32 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $29.75
+09:32:03 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($43.01)
+09:32:33 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $68.27
+09:33:04 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $85.39
+09:33:35 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($30.17)
+09:34:06 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($68.69)
+09:34:37 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($148.08)
+09:35:08 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($278.45)
+09:35:39 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($231.37)
+09:36:09 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -428 shares.
+09:36:40 ET | Polling... | Prediction: Buy
+09:36:40 ET | SIGNAL: BUY  | Submitting market order for 854 shares.
+09:37:11 ET | HOLDING  | Side: Buy , Qty:   854, P/L: $233.51
+09:37:42 ET | HOLDING  | Side: Buy , Qty:   854, P/L: $182.27
+09:38:13 ET | HOLDING  | Side: Buy , Qty:   854, P/L: $122.49
+09:38:44 ET | HOLDING  | Side: Buy , Qty:   854, P/L: ($253.27)
+09:39:15 ET | HOLDING  | Side: Buy , Qty:   854, P/L: ($415.53)
+09:39:46 ET | HOLDING  | Side: Buy , Qty:   854, P/L: ($620.58)
+09:40:16 ET | HOLDING  | Side: Buy , Qty:   854, P/L: ($253.27)
+09:40:47 ET | HOLDING  | Side: Buy , Qty:   854, P/L: ($5.61)
+09:41:18 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 854 shares.
+09:41:49 ET | Polling... | Prediction: Sell
+09:41:49 ET | SIGNAL: SELL | Submitting market order for 427 shares.
+09:42:20 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $36.39
+09:42:51 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $86.40
+09:43:22 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($5.41)
+09:43:52 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($60.92)
+09:44:23 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $20.21
+09:44:54 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $75.72
+09:45:24 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($78.00)
+09:45:55 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($65.19)
+09:46:26 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $33.96
+09:46:57 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($5.41)
+09:47:28 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $92.80
+09:47:58 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $173.93
+09:48:29 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $11.67
+09:49:00 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $11.67
+09:49:31 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($69.46)
+09:50:02 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($116.43)
+09:50:33 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($69.46)
+09:51:04 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($3.28)
+09:51:35 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($261.61)
+09:52:06 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($223.18)
+09:52:37 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($163.40)
+09:53:07 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($197.56)
+09:53:38 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($167.67)
+09:54:09 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($227.45)
+09:54:39 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($265.88)
+09:55:10 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($244.53)
+09:55:41 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($359.82)
+09:56:12 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($355.55)
+09:56:43 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($415.33)
+09:57:13 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($402.52)
+09:57:44 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($411.06)
+09:58:15 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($325.66)
+09:58:45 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($218.91)
+09:59:16 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($184.11)
+09:59:47 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($133.51)
+10:00:18 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($69.46)
+10:00:48 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($116.43)
+10:01:19 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($107.89)
+10:01:50 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: $33.02
+10:02:21 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($22.49)
+10:02:52 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($78.00)
+10:03:23 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($82.27)
+10:03:54 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($159.13)
+10:04:25 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($197.56)
+10:04:55 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($231.72)
+10:05:26 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($176.21)
+10:05:57 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($218.91)
+10:06:28 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($304.31)
+10:06:59 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($278.69)
+10:07:30 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($265.88)
+10:08:01 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($282.96)
+10:08:32 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($329.93)
+10:09:03 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($295.77)
+10:09:34 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($278.69)
+10:10:04 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($229.59)
+10:10:35 ET | HOLDING  | Side: Sell, Qty:  -427, P/L: ($244.53)
+10:11:06 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -427 shares.
+10:11:37 ET | Polling... | Prediction: Buy
+10:11:37 ET | SIGNAL: BUY  | Submitting market order for 852 shares.
+10:12:08 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($170.40)
+10:12:39 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($332.28)
+10:13:09 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($281.16)
+10:13:40 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($289.68)
+10:14:11 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($281.16)
+10:14:42 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($289.68)
+10:15:13 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($451.56)
+10:15:43 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($374.88)
+10:16:14 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($558.06)
+10:16:45 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($494.16)
+10:17:16 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($511.20)
+10:17:47 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($579.36)
+10:18:17 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($604.92)
+10:18:48 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($715.68)
+10:19:19 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($954.24)
+10:19:50 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($902.86)
+10:20:20 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($937.20)
+10:20:51 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($928.68)
+10:21:22 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($834.96)
+10:21:53 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($1,107.60)
+10:22:24 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($834.96)
+10:22:54 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($834.96)
+10:23:25 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($826.44)
+10:23:56 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($647.52)
+10:24:26 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($741.24)
+10:24:57 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($775.32)
+10:25:28 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($630.48)
+10:25:59 ET | HOLDING  | Side: Buy , Qty:   852, P/L: ($758.28)
+10:26:29 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 852 shares.
+10:27:00 ET | Polling... | Prediction: Sell
+10:27:00 ET | SIGNAL: SELL | Submitting market order for 425 shares.
+10:27:31 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($140.99)
+10:28:02 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($98.49)
+10:28:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($170.74)
+10:29:04 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($213.24)
+10:29:34 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($225.99)
+10:30:05 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($242.99)
+10:30:36 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($281.24)
+10:31:07 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -425 shares.
+10:31:38 ET | Polling... | Prediction: Buy
+10:31:38 ET | SIGNAL: BUY  | Submitting market order for 849 shares.
+10:32:09 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($0.50)
+10:32:40 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $84.40
+10:33:10 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($136.34)
+10:33:41 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($330.76)
+10:34:12 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($225.49)
+10:34:43 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($259.45)
+10:35:13 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($255.20)
+10:35:44 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($348.59)
+10:36:15 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 849 shares.
+10:36:46 ET | Polling... | Prediction: Sell
+10:36:46 ET | SIGNAL: SELL | Submitting market order for 424 shares.
+10:37:17 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $2.12
+10:37:48 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $33.07
+10:38:19 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $12.72
+10:38:49 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($89.04)
+10:39:20 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($106.00)
+10:39:51 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($59.36)
+10:40:22 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($63.60)
+10:40:52 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($55.12)
+10:41:23 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($74.20)
+10:41:54 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($84.80)
+10:42:25 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($159.00)
+10:42:55 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($156.92)
+10:43:26 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($174.69)
+10:43:57 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($156.88)
+10:44:27 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($127.20)
+10:44:58 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($135.68)
+10:45:29 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($156.88)
+10:45:59 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($84.80)
+10:46:30 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -424 shares.
+10:47:01 ET | Polling... | Prediction: Buy
+10:47:01 ET | SIGNAL: BUY  | Submitting market order for 847 shares.
+10:47:32 ET | HOLDING  | Side: Buy , Qty:   847, P/L: $132.08
+10:48:03 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($11.91)
+10:48:34 ET | HOLDING  | Side: Buy , Qty:   847, P/L: $21.97
+10:49:04 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($2.34)
+10:49:35 ET | HOLDING  | Side: Buy , Qty:   847, P/L: $64.32
+10:50:06 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($105.08)
+10:50:37 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($282.95)
+10:51:07 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 847 shares.
+10:51:38 ET | Polling... | Prediction: Sell
+10:51:38 ET | SIGNAL: SELL | Submitting market order for 423 shares.
+10:52:09 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $18.31
+10:52:40 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($23.99)
+10:53:11 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $1.39
+10:53:41 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $18.31
+10:54:12 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($15.53)
+10:54:43 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($7.07)
+10:55:13 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $14.08
+10:55:44 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($12.82)
+10:56:15 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($7.07)
+10:56:45 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($55.72)
+10:57:16 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($74.75)
+10:57:47 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($45.14)
+10:58:17 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($83.21)
+10:58:48 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $18.31
+10:59:19 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $69.49
+10:59:50 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $102.91
+11:00:20 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $102.91
+11:00:51 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $77.53
+11:01:22 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -423 shares.
+11:01:53 ET | Polling... | Prediction: Buy
+11:01:53 ET | SIGNAL: BUY  | Submitting market order for 848 shares.
+11:02:24 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $50.88
+11:02:55 ET | HOLDING  | Side: Buy , Qty:   848, P/L: ($67.84)
+11:03:26 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $67.84
+11:03:56 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $76.32
+11:04:27 ET | HOLDING  | Side: Buy , Qty:   848, P/L: ($50.88)
+11:04:58 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $50.88
+11:05:28 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $33.92
+11:05:59 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $33.92
+11:06:30 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 848 shares.
+11:07:01 ET | Polling... | Prediction: Sell
+11:07:01 ET | SIGNAL: SELL | Submitting market order for 424 shares.
+11:07:32 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $72.69
+11:08:02 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $11.17
+11:08:33 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $36.61
+11:09:04 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $15.41
+11:09:34 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $32.37
+11:10:05 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($5.79)
+11:10:36 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($39.71)
+11:11:07 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -424 shares.
+11:11:37 ET | Polling... | Prediction: Buy
+11:11:37 ET | SIGNAL: BUY  | Submitting market order for 847 shares.
+11:12:09 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($56.87)
+11:12:39 ET | HOLDING  | Side: Buy , Qty:   847, P/L: $36.30
+11:13:10 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($27.23)
+11:13:41 ET | HOLDING  | Side: Buy , Qty:   847, P/L: $44.77
+11:14:11 ET | HOLDING  | Side: Buy , Qty:   847, P/L: $36.30
+11:14:42 ET | HOLDING  | Side: Buy , Qty:   847, P/L: $57.47
+11:15:13 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($124.63)
+11:15:43 ET | HOLDING  | Side: Buy , Qty:   847, P/L: ($209.33)
+11:16:14 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 847 shares.
+11:16:45 ET | Polling... | Prediction: Sell
+11:16:45 ET | SIGNAL: SELL | Submitting market order for 423 shares.
+11:17:16 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($46.65)
+11:17:47 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: ($38.19)
+11:18:18 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $37.95
+11:18:48 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $80.25
+11:19:19 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $92.94
+11:19:50 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $164.85
+11:20:20 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $181.81
+11:20:51 ET | HOLDING  | Side: Sell, Qty:  -423, P/L: $177.54
+11:21:22 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -423 shares.
+11:21:52 ET | Polling... | Prediction: Buy
+11:21:52 ET | SIGNAL: BUY  | Submitting market order for 848 shares.
+11:22:23 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $72.08
+11:22:54 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $144.16
+11:23:25 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $33.92
+11:23:55 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $72.08
+11:24:26 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $118.72
+11:24:57 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $93.28
+11:25:28 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $178.08
+11:25:58 ET | HOLDING  | Side: Buy , Qty:   848, P/L: $211.92
+11:26:29 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 848 shares.
+11:27:00 ET | Polling... | Prediction: Sell
+11:27:00 ET | SIGNAL: SELL | Submitting market order for 424 shares.
+11:27:31 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($16.96)
+11:28:02 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($25.44)
+11:28:32 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($38.20)
+11:29:03 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($72.08)
+11:29:34 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($127.24)
+11:30:04 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($110.24)
+11:30:35 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($127.20)
+11:31:06 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($152.64)
+11:31:37 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($144.16)
+11:32:07 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($165.36)
+11:32:38 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($161.08)
+11:33:09 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($186.56)
+11:33:40 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($156.88)
+11:34:11 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($131.44)
+11:34:41 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($63.60)
+11:35:12 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($114.48)
+11:35:43 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($76.32)
+11:36:13 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($76.28)
+11:36:44 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($46.64)
+11:37:15 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($59.36)
+11:37:46 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($80.56)
+11:38:16 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($76.32)
+11:38:47 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($80.56)
+11:39:18 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($80.56)
+11:39:48 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($84.76)
+11:40:19 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($63.60)
+11:40:50 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($42.36)
+11:41:20 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($50.88)
+11:41:51 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($33.92)
+11:42:22 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($21.20)
+11:42:52 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $8.48
+11:43:23 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($8.48)
+11:43:54 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($2.80)
+11:44:24 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($10.26)
+11:44:55 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: ($8.48)
+11:45:26 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $8.48
+11:45:57 ET | HOLDING  | Side: Sell, Qty:  -424, P/L: $80.56
+11:46:27 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -424 shares.
+11:46:58 ET | Polling... | Prediction: Buy
+11:46:58 ET | SIGNAL: BUY  | Submitting market order for 849 shares.
+11:47:29 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $158.34
+11:48:00 ET | HOLDING  | Side: Buy , Qty:   849, P/L: ($87.28)
+11:48:30 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $14.01
+11:49:01 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $14.77
+11:49:32 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $81.93
+11:50:03 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $90.42
+11:50:34 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $9.77
+11:51:04 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $213.53
+11:51:35 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $234.75
+11:52:06 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $285.69
+11:52:36 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $319.65
+11:53:07 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $294.18
+11:53:38 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $370.59
+11:54:08 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $430.02
+11:54:39 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $506.43
+11:55:10 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $544.64
+11:55:41 ET | HOLDING  | Side: Buy , Qty:   849, P/L: $608.31
+11:56:11 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 849 shares.
+11:56:42 ET | Polling... | Prediction: Sell
+11:56:42 ET | SIGNAL: SELL | Submitting market order for 425 shares.
+11:57:13 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($20.78)
+11:57:44 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($54.78)
+11:58:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($20.78)
+11:58:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($42.03)
+11:59:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($71.70)
+11:59:46 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: ($37.78)
+12:00:17 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $30.22
+12:00:48 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $34.47
+12:01:19 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $51.47
+12:01:49 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $115.22
+12:02:20 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $115.22
+12:02:51 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $85.47
+12:03:22 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $89.72
+12:03:52 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $76.97
+12:04:23 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $85.47
+12:04:54 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $123.72
+12:05:24 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $147.10
+12:05:55 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $166.22
+12:06:26 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $187.47
+12:06:56 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $244.85
+12:07:27 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $174.72
+12:07:58 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $200.22
+12:08:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $183.22
+12:08:59 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $217.22
+12:09:30 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $208.72
+12:10:00 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $225.72
+12:10:31 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $208.72
+12:11:02 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $225.72
+12:11:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $204.47
+12:12:03 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $204.47
+12:12:34 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $246.93
+12:13:05 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $212.97
+12:13:35 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $200.22
+12:14:06 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $203.83
+12:14:37 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $250.41
+12:15:07 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $263.97
+12:15:38 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $293.72
+12:16:09 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $289.47
+12:16:40 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $336.22
+12:17:10 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $346.63
+12:17:41 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $382.97
+12:18:12 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $334.10
+12:18:42 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $312.85
+12:19:13 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $323.47
+12:19:44 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $374.47
+12:20:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $366.01
+12:20:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $292.02
+12:21:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $293.72
+12:21:47 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $327.72
+12:22:18 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $361.72
+12:22:48 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $359.60
+12:23:19 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $357.47
+12:23:50 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $361.72
+12:24:20 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $402.10
+12:24:51 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $387.22
+12:25:22 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $416.97
+12:25:52 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $370.22
+12:26:23 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $412.72
+12:26:54 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $433.97
+12:27:24 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $446.72
+12:27:55 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $447.53
+12:28:26 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $404.22
+12:28:57 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $370.22
+12:29:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $354.11
+12:29:58 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $365.97
+12:30:29 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $340.47
+12:31:00 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $361.72
+12:31:30 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $408.47
+12:32:01 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $463.72
+12:32:32 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+12:33:03 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+12:33:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $589.10
+12:34:04 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $612.47
+12:34:35 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $544.43
+12:35:06 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+12:35:36 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $523.22
+12:36:07 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $599.72
+12:36:38 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $631.60
+12:37:08 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+12:37:39 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+12:38:10 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $714.47
+12:38:40 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+12:39:11 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $633.72
+12:39:42 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $620.97
+12:40:12 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $629.47
+12:40:44 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $627.35
+12:41:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+12:41:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $557.22
+12:42:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $576.35
+12:42:47 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $547.87
+12:43:17 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $548.72
+12:43:48 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $463.72
+12:44:19 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $484.97
+12:44:49 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $552.97
+12:45:20 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $603.97
+12:45:51 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $676.22
+12:46:21 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $659.22
+12:46:52 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+12:47:23 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $756.97
+12:47:54 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $731.47
+12:48:24 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+12:48:55 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $731.47
+12:49:25 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+12:49:56 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $714.47
+12:50:27 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $654.97
+12:50:58 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $608.22
+12:51:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $616.72
+12:51:59 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $608.22
+12:52:30 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $650.72
+12:53:00 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $659.26
+12:53:31 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $631.60
+12:54:02 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $584.85
+12:54:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+12:55:03 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $514.72
+12:55:34 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $489.22
+12:56:05 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $514.72
+12:56:35 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $557.22
+12:57:06 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $548.72
+12:57:37 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $553.44
+12:58:07 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+12:58:38 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $633.72
+12:59:09 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $661.35
+12:59:39 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $612.47
+13:00:10 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $595.47
+13:00:41 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $620.97
+13:01:12 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $548.72
+13:01:42 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $606.10
+13:02:13 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $634.15
+13:02:44 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $667.72
+13:03:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $720.85
+13:03:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $735.72
+13:04:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $718.72
+13:04:46 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $756.97
+13:05:17 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+13:05:48 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $778.22
+13:06:19 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $756.97
+13:06:49 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $718.72
+13:07:20 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $742.10
+13:07:51 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $763.35
+13:08:22 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $780.39
+13:08:52 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $803.72
+13:09:23 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $799.47
+13:09:54 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $790.97
+13:10:24 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $732.32
+13:10:55 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $697.47
+13:11:26 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $667.72
+13:11:56 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $744.22
+13:12:27 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $680.47
+13:12:58 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $744.22
+13:13:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $744.22
+13:13:59 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $748.47
+13:14:30 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $748.47
+13:15:01 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $786.72
+13:15:31 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $816.47
+13:16:02 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $773.97
+13:16:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $762.33
+13:17:03 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $768.87
+13:17:34 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $748.47
+13:18:05 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+13:18:35 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $712.35
+13:19:06 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $663.47
+13:19:37 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $663.47
+13:20:08 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+13:20:39 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $676.22
+13:21:09 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $676.22
+13:21:40 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $676.22
+13:22:11 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $690.76
+13:22:41 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+13:23:12 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $629.47
+13:23:43 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $567.80
+13:24:13 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $569.97
+13:24:44 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $557.22
+13:25:15 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $518.97
+13:25:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $578.47
+13:26:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $667.72
+13:26:47 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $642.22
+13:27:18 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $633.72
+13:27:48 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $672.01
+13:28:19 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $597.60
+13:28:50 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $599.72
+13:29:20 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $603.97
+13:29:51 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $625.22
+13:30:22 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $569.97
+13:30:52 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $603.97
+13:31:23 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $650.68
+13:31:54 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $680.47
+13:32:25 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $603.97
+13:32:55 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+13:33:26 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $582.72
+13:33:57 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $627.35
+13:34:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $629.47
+13:34:58 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $640.10
+13:35:29 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $629.47
+13:36:00 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $629.90
+13:36:30 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $612.47
+13:37:01 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $642.22
+13:37:32 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $663.47
+13:38:02 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $654.97
+13:38:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $625.22
+13:39:04 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $680.47
+13:39:34 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $684.72
+13:40:05 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+13:40:36 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $739.97
+13:41:07 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $727.22
+13:41:38 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $718.72
+13:42:09 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $710.22
+13:42:39 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $688.97
+13:43:10 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+13:43:41 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $693.22
+13:44:11 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $676.22
+13:44:42 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $654.97
+13:45:13 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $654.97
+13:45:44 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $659.22
+13:46:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $693.22
+13:46:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $754.85
+13:47:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $710.22
+13:47:46 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $703.85
+13:48:17 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $714.47
+13:48:48 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $761.22
+13:49:18 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $795.22
+13:49:49 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $782.47
+13:50:20 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $786.72
+13:50:50 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $780.35
+13:51:21 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $884.47
+13:51:52 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $884.47
+13:52:22 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $897.22
+13:52:53 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $1,016.22
+13:53:24 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $949.07
+13:53:55 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $948.22
+13:54:25 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $905.72
+13:54:56 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $837.72
+13:55:27 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $841.97
+13:55:57 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $839.85
+13:56:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $837.72
+13:56:59 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $901.47
+13:57:30 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $871.72
+13:58:01 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $914.22
+13:58:31 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $876.40
+13:59:02 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $926.16
+13:59:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $901.60
+14:00:04 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $871.72
+14:00:35 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $886.60
+14:01:05 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $905.72
+14:01:36 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $912.73
+14:02:07 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $875.97
+14:02:37 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $901.47
+14:03:08 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $905.72
+14:03:39 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $888.72
+14:04:10 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $901.47
+14:04:40 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $943.97
+14:05:11 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $937.60
+14:05:42 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $922.72
+14:06:12 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $858.97
+14:06:43 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $854.72
+14:07:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $858.97
+14:07:44 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $812.22
+14:08:15 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $875.97
+14:08:46 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $897.22
+14:09:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $897.22
+14:09:47 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $859.14
+14:10:18 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $820.72
+14:10:49 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $731.47
+14:11:19 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $701.72
+14:11:50 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $718.72
+14:12:21 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $686.85
+14:12:51 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $712.35
+14:13:22 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $697.47
+14:13:53 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $650.72
+14:14:24 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $684.72
+14:14:54 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $676.22
+14:15:25 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $693.22
+14:15:56 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $638.31
+14:16:26 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $606.27
+14:16:57 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $597.94
+14:17:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $620.97
+14:17:58 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $591.22
+14:18:29 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $599.72
+14:19:00 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+14:19:30 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+14:20:01 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $569.97
+14:20:32 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+14:21:03 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $552.97
+14:21:33 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $519.01
+14:22:04 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $535.97
+14:22:35 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $533.63
+14:23:06 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $499.85
+14:23:36 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+14:24:07 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+14:24:38 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $580.60
+14:25:08 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $612.47
+14:25:39 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $657.44
+14:26:10 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $620.97
+14:26:40 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $620.97
+14:27:11 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $614.60
+14:27:42 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $616.72
+14:28:12 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+14:28:43 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $583.27
+14:29:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+14:29:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $562.02
+14:30:15 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $531.76
+14:30:46 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $576.35
+14:31:16 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+14:31:47 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $625.22
+14:32:18 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $612.47
+14:32:49 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $616.76
+14:33:19 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $599.72
+14:33:50 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $599.72
+14:34:21 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $593.35
+14:34:51 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $574.22
+14:35:22 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $582.72
+14:35:53 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $552.97
+14:36:24 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $595.47
+14:36:55 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $591.22
+14:37:25 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $578.47
+14:37:56 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $597.60
+14:38:27 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $663.47
+14:38:57 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $688.97
+14:39:28 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $705.97
+14:39:59 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $703.85
+14:40:29 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $756.46
+14:41:00 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $748.47
+14:41:31 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $773.93
+14:42:01 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $797.69
+14:42:32 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $769.72
+14:43:03 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $719.02
+14:43:34 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $735.72
+14:44:04 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $735.72
+14:44:35 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $680.47
+14:45:06 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+14:45:36 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $665.60
+14:46:07 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $669.63
+14:46:38 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $642.22
+14:47:08 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $629.47
+14:47:39 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $591.22
+14:48:10 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $591.22
+14:48:41 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $595.47
+14:49:11 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $586.97
+14:49:42 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $616.72
+14:50:13 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $606.10
+14:50:43 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $667.72
+14:51:14 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $671.97
+14:51:45 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $646.47
+14:52:15 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $659.22
+14:52:46 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $659.22
+14:53:17 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $720.85
+14:53:48 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $729.35
+14:54:18 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $705.97
+14:54:49 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $731.47
+14:55:20 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $688.97
+14:55:50 ET | HOLDING  | Side: Sell, Qty:  -425, P/L: $684.72
+14:56:21 ET | EXIT: CONTRARY SIGNAL (BUY) | Submitting order to close -425 shares.
+14:56:52 ET | Polling... | Prediction: Buy
+14:56:52 ET | SIGNAL: BUY  | Submitting market order for 856 shares.
+14:57:23 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($51.36)
+14:57:54 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($81.32)
+14:58:24 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($179.76)
+14:58:55 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($154.08)
+14:59:26 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($136.96)
+14:59:57 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($145.52)
+15:00:27 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($158.36)
+15:00:58 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($273.92)
+15:01:29 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($162.64)
+15:02:00 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($239.68)
+15:02:30 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($231.12)
+15:03:01 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($235.40)
+15:03:32 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($196.88)
+15:04:03 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($261.08)
+15:04:33 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($209.04)
+15:05:04 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($119.84)
+15:05:35 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($136.96)
+15:06:05 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($128.40)
+15:06:36 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($132.00)
+15:07:07 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($238.82)
+15:07:37 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($239.68)
+15:08:08 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($209.72)
+15:08:39 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($141.24)
+15:09:09 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($126.77)
+15:09:40 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($196.79)
+15:10:11 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($252.52)
+15:10:42 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($291.04)
+15:11:12 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($428.00)
+15:11:43 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($385.20)
+15:12:14 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($556.40)
+15:12:44 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($659.12)
+15:13:15 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($710.48)
+15:13:46 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($642.00)
+15:14:17 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($667.59)
+15:14:47 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($659.12)
+15:15:18 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($701.92)
+15:15:49 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($684.80)
+15:16:20 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($556.40)
+15:16:51 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($603.48)
+15:17:21 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($530.72)
+15:17:52 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($564.96)
+15:18:23 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($642.00)
+15:18:53 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($684.80)
+15:19:24 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($693.36)
+15:19:55 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($659.12)
+15:20:25 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($590.64)
+15:20:56 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($616.23)
+15:21:27 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($582.08)
+15:21:58 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($616.32)
+15:22:28 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($667.68)
+15:22:59 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($701.83)
+15:23:30 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($667.68)
+15:24:01 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($693.36)
+15:24:31 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($667.68)
+15:25:02 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($638.40)
+15:25:33 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($693.36)
+15:26:03 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($645.85)
+15:26:34 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($698.07)
+15:27:05 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($736.16)
+15:27:35 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($684.80)
+15:28:06 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($616.32)
+15:28:37 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($650.56)
+15:29:08 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($710.48)
+15:29:39 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($586.36)
+15:30:09 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($539.28)
+15:30:40 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($454.71)
+15:31:11 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($453.68)
+15:31:42 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($419.53)
+15:32:12 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($316.72)
+15:32:43 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($256.80)
+15:33:14 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($299.60)
+15:33:44 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($428.00)
+15:34:15 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($505.04)
+15:34:46 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($564.96)
+15:35:16 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($488.52)
+15:35:47 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($470.80)
+15:36:18 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($368.08)
+15:36:49 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($359.52)
+15:37:20 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($316.72)
+15:37:50 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($291.04)
+15:38:21 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($256.80)
+15:38:52 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($234.72)
+15:39:22 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($188.32)
+15:39:53 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($171.20)
+15:40:24 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($111.37)
+15:40:55 ET | HOLDING  | Side: Buy , Qty:   856, P/L: ($85.60)
+15:41:25 ET | EXIT: CONTRARY SIGNAL (SELL) | Submitting order to close 856 shares.
+15:41:56 ET | Polling... | Prediction: Sell
+15:41:56 ET | SIGNAL: SELL | Submitting market order for 428 shares.
+15:42:27 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($21.10)
+15:42:58 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($40.40)
+15:43:28 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($72.50)
+15:43:59 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($100.32)
+15:44:30 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($89.62)
+15:45:01 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($70.36)
+15:45:31 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($128.14)
+15:46:02 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($149.54)
+15:46:33 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($102.46)
+15:47:04 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($140.98)
+15:47:34 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($158.74)
+15:48:05 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($153.86)
+15:48:36 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($158.10)
+15:49:07 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($166.66)
+15:49:37 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($162.38)
+15:50:08 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($25.42)
+15:50:39 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $0.26
+15:51:10 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $8.82
+15:51:40 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($27.00)
+15:52:11 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($4.02)
+15:52:42 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($25.42)
+15:53:13 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($40.40)
+15:53:44 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($76.78)
+15:54:14 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($85.34)
+15:54:45 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $13.10
+15:55:16 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($16.86)
+15:55:46 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($4.02)
+15:56:17 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($29.70)
+15:56:48 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $8.82
+15:57:19 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $64.46
+15:57:49 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($6.16)
+15:58:20 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $18.11
+15:58:51 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: $68.78
+15:59:22 ET | HOLDING  | Side: Sell, Qty:  -428, P/L: ($4.02)
+15:59:52 ET | EXIT: END OF DAY LIQUIDATION | Submitting order to close -428 shares.
+Market has closed for the day. Consolidating logs and restarting pre-market wait logic.
+
+Consolidating 1 log file(s) for 2025-09-08...
+
+--- End of trading_log_2025-09-08_09-21-28.log ---
