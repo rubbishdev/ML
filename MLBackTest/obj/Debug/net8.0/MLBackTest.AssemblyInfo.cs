@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MLBackTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b16be50b43ec3b6e80abff273df7ee98c90254d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74b5e897202ce5119b01c3c3199f889232f2dc7c")]
 [assembly: System.Reflection.AssemblyProductAttribute("MLBackTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MLBackTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
