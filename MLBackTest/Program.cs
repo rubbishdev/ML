@@ -1,21 +1,19 @@
-﻿using DataModels;
-using MachineLearningProcessor;
-using Microsoft.Extensions.Configuration;
-using Microsoft.ML;
+﻿using AlpacaService;
+using DataModels;
 using PolygonService;
+using Strategies;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using MLTrading;
 
 namespace MLBackTest
 {
     class Program
     {
-        // A helper class to store daily performance statistics
         class DailyStats
         {
             public decimal TotalPnl { get; set; }
@@ -32,195 +30,135 @@ namespace MLBackTest
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
             IConfiguration config = builder.Build();
 
             var polygonApiKey = config["PolygonApiKey"];
             var ticker = config.GetSection("TradingConfig")["Ticker"];
             var startDate = config.GetSection("TradingConfig")["BackTestStartDate"];
-            var endDate = config.GetSection("TradingConfig")["BackTestEndDate"];
+            int currentYear = DateTime.UtcNow.Year;
+            var endDate = $"{currentYear}-12-31";
             var timeFrame = config.GetSection("TradingConfig")["TimeFrame"];
             var timeFrameMultiplier = int.Parse(config.GetSection("TradingConfig")["TimeFrameMultiplier"]);
             var allowShortSelling = bool.Parse(config.GetSection("TradingConfig")["AllowShortSelling"]);
             var startingCapital = decimal.Parse(config.GetSection("BacktestConfig")["StartingCapital"]);
             var takeProfitPercentage = decimal.Parse(config.GetSection("RiskManagement")["TakeProfitPercentage"]);
             var stopLossPercentage = decimal.Parse(config.GetSection("RiskManagement")["StopLossPercentage"]);
+            var strategyConfig = config.GetSection("StrategyConfig").GetChildren().ToDictionary(c => c.Key, c => (object)c.Value);
 
             // --- PATHS ---
             string solutionRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
-            var processorProjectRoot = Path.Combine(solutionRoot, "MachineLearningProcessor");
-            var modelIdentifierStartDate = config.GetSection("TradingConfig")["StartDate"];
-            var modelIdentifierEndDate = config.GetSection("TradingConfig")["EndDate"];
-            var dataFileIdentifier = "QQQ_5_minute_20250101_20250909";// $"{ticker}_{timeFrameMultiplier}_{timeFrame}_{modelIdentifierStartDate.Replace("-", "")}_{modelIdentifierEndDate.Replace("-", "")}";
-            var modelPath = Path.Combine(processorProjectRoot, $"{dataFileIdentifier}_momentum_model.zip");
-            var backtestLogPath = Path.Combine(AppContext.BaseDirectory, $"{ticker}_{timeFrameMultiplier}_{timeFrame}_{startDate.Replace("-", "")}_{endDate.Replace("-", "")}_BacktestResults.csv");
+            var dataPath = Path.Combine(solutionRoot, "MachineLearningProcessor", "Data");
+            var logsPath = Path.Combine(Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.FullName, "Logs");
+            Directory.CreateDirectory(dataPath);
+            Directory.CreateDirectory(logsPath);
 
-            // --- VALIDATION ---
-            if (!File.Exists(modelPath))
-            {
-                Console.WriteLine($"Model file not found at {modelPath}. Please run MachineLearningProcessor first with an EndDate of {modelIdentifierEndDate}.");
-                return;
-            }
+            var fileNameSafeStartDate = startDate.Replace("-", "");
+            var fileNameSafeEndDate = endDate.Replace("-", "");
+            var dataFileIdentifier = $"{ticker}_{timeFrameMultiplier}_{timeFrame}_{fileNameSafeStartDate}_{fileNameSafeEndDate}";
+            var rawDataCsvPath = Path.Combine(dataPath, $"{dataFileIdentifier}_raw_data.csv");
+            var backtestLogPath = Path.Combine(logsPath, $"{dataFileIdentifier}_backtest_results.csv");
 
-            // --- SETUP ---
-            var mlContext = new MLContext();
+            // --- SERVICES ---
+            TimeZoneInfo easternZone;
+            try { easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"); }
+            catch { easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York"); }
+
+            var logger = new LoggerService(logsPath, easternZone);
             var dataHandler = new DataHandler();
-            var simulator = new BacktestSimulator();
-            var polygonService = new PolygonApiService(polygonApiKey);
-            var featureEngineer = new MomentumFeatureEngineer();
+            var polygonService = new PolygonApiService(polygonApiKey, ticker);
+            var strategy = new GenericTradingStrategy();
+            strategy.SetParameters(strategyConfig);
+            var simulator = new BacktestSimulator(strategy);
 
-            Console.WriteLine("\nLoading trained model...");
-            var model = mlContext.Model.Load(modelPath, out _);
-
-            // --- DATA ACQUISITION & FEATURE ENGINEERING ---
-            Console.WriteLine($"Downloading {timeFrameMultiplier} {timeFrame} aggregate data for {ticker} from {startDate} to {endDate}...");
-            var rawData = await polygonService.GetAggregates(ticker, startDate, endDate, timeFrame, timeFrameMultiplier);
-            if (!rawData.Any())
+            // --- DATA ---
+            List<MarketBar> rawData;
+            if (File.Exists(rawDataCsvPath))
             {
-                Console.WriteLine("Failed to download data for backtest. Exiting.");
-                return;
-            }
-            Console.WriteLine($"Data download complete. Generating features...");
-            var backtestData = featureEngineer.GenerateFeaturesAndLabels(rawData);
-
-            Console.WriteLine($"\nStarting simulation on {backtestData.Count} data points with starting capital of {startingCapital:C}...");
-            var results = simulator.Run(backtestData, model, mlContext, startingCapital, allowShortSelling, takeProfitPercentage, stopLossPercentage);
-            Console.WriteLine("\n--- Backtest Complete ---");
-
-            // --- RESULTS ---
-            if (results.TradeLog.Any())
-            {
-                dataHandler.SaveToCsv(results.TradeLog, backtestLogPath);
-
-                // --- TEARSHEET CALCULATION ---
-                var tradeLog = results.TradeLog;
-                var endingCapital = results.EndingCapital;
-                var totalReturn = (endingCapital - startingCapital) / startingCapital;
-                var winningTrades = tradeLog.Where(t => t.ProfitLoss > 0).ToList();
-                var losingTrades = tradeLog.Where(t => t.ProfitLoss < 0).ToList();
-
-                var winRate = (double)winningTrades.Count / tradeLog.Count;
-                var largestWin = winningTrades.Any() ? winningTrades.Max(t => t.ProfitLoss) : 0;
-                var largestLoss = losingTrades.Any() ? losingTrades.Min(t => t.ProfitLoss) : 0;
-                var avgTradePl = tradeLog.Average(t => t.ProfitLoss);
-                var avgWin = winningTrades.Any() ? winningTrades.Average(t => t.ProfitLoss) : 0;
-                var avgLoss = losingTrades.Any() ? losingTrades.Average(t => t.ProfitLoss) : 0;
-
-                var dailyStats = tradeLog
-                    .GroupBy(t => t.EntryTime.Date)
-                    .ToDictionary(
-                        g => g.Key,
-                        g => new DailyStats
-                        {
-                            TotalPnl = g.Sum(t => t.ProfitLoss),
-                            TotalTrades = g.Count(),
-                            WinningTrades = g.Count(t => t.ProfitLoss > 0)
-                        });
-
-                var winningDays = dailyStats.Count(d => d.Value.TotalPnl > 0);
-                var losingDays = dailyStats.Count(d => d.Value.TotalPnl < 0);
-
-                decimal peakCapital = startingCapital;
-                decimal maxDrawdown = 0;
-                decimal currentBalance = startingCapital;
-                foreach (var trade in tradeLog)
-                {
-                    currentBalance += trade.ProfitLoss;
-                    peakCapital = Math.Max(peakCapital, currentBalance);
-                    var drawdown = peakCapital > 0 ? (peakCapital - currentBalance) / peakCapital : 0;
-                    maxDrawdown = Math.Max(maxDrawdown, drawdown);
-                }
-
-                // --- TEARSHEET DISPLAY ---
-                Console.WriteLine("\n\n=====================================================================================================");
-                Console.WriteLine("                                                TEARSHEET");
-                Console.WriteLine("=====================================================================================================");
-
-                Console.WriteLine("\n----- PERFORMANCE METRICS -----");
-                Console.Write($"Starting Capital: {startingCapital,20:C}\n");
-                Console.Write($"Ending Capital:   "); PrintColoredLine(endingCapital, 20, "C");
-                Console.Write($"Total Return:     "); PrintColoredLine(totalReturn, 20, "P2");
-
-                Console.WriteLine("\n----- RISK METRICS -----");
-                Console.Write($"Max Drawdown:     "); PrintColoredLine(-maxDrawdown, 20, "P2");
-                Console.Write($"Largest Win:      "); PrintColoredLine(largestWin, 20, "C");
-                Console.Write($"Largest Loss:     "); PrintColoredLine(largestLoss, 20, "C");
-
-                Console.WriteLine("\n----- TRADING METRICS -----");
-                Console.WriteLine($"Total Trades:     {tradeLog.Count,20}");
-                Console.WriteLine($"Win Rate:         {winRate,20:P2}");
-                Console.Write($"Avg. Trade P/L:   "); PrintColoredLine(avgTradePl, 20, "C");
-                Console.Write($"Avg. Win:         "); PrintColoredLine(avgWin, 20, "C");
-                Console.Write($"Avg. Loss:        "); PrintColoredLine(avgLoss, 20, "C");
-                Console.WriteLine($"Winning Days:     {winningDays,20}");
-                Console.WriteLine($"Losing Days:      {losingDays,20}");
-
-                // --- NEW: TIME PERIOD ANALYSIS DISPLAY ---
-                var timeAnalysis = simulator.GenerateTimePeriodAnalysis(results.TradeLog);
-                Console.WriteLine("\n----- TIME PERIOD ANALYSIS -----");
-                Console.WriteLine("+----------------+--------+----------+---------------+");
-                Console.WriteLine("| Period         | Trades | Win Rate | Avg P/L       |");
-                Console.WriteLine("+----------------+--------+----------+---------------+");
-                foreach (var analysis in timeAnalysis)
-                {
-                    Console.Write($"| {analysis.Period,-14} | {analysis.NumberOfTrades,6} | {analysis.WinRate,8:P2} |");
-                    PrintColoredValueInTable(analysis.AverageProfitLoss, 15, "C2");
-                    Console.WriteLine(" |");
-                }
-                Console.WriteLine("+----------------+--------+----------+---------------+");
-
-
-                // --- LAST 30 TRADING DAYS DISPLAY ---
-                var last30TradingDays = dailyStats
-                    .OrderByDescending(kvp => kvp.Key)
-                    .Take(30)
-                    .OrderBy(kvp => kvp.Key);
-
-                Console.WriteLine($"\n----- LAST 30 TRADING DAYS P/L -----");
-                Console.WriteLine("+------------+-----------+---------------+---------------+");
-                Console.WriteLine("|    Date    |    Day    |  Trades (W/T) |   Daily P/L   |");
-                Console.WriteLine("+------------+-----------+---------------+---------------+");
-
-                foreach (var day in last30TradingDays)
-                {
-                    var stats = day.Value;
-                    string tradeStats = $"{stats.WinningTrades}/{stats.TotalTrades}";
-
-                    Console.Write($"| {day.Key:yyyy-MM-dd} | {day.Key.DayOfWeek,-9} | {tradeStats,13} |");
-
-                    PrintColoredValueInTable(stats.TotalPnl, 15, "C0");
-
-                    Console.WriteLine(" |");
-                }
-                Console.WriteLine("+------------+-----------+---------------+---------------+");
-
-
-                Console.WriteLine($"\n\nResults saved to: {backtestLogPath}");
-                Console.WriteLine("=====================================================================================================");
+                rawData = dataHandler.LoadFromCsv<MarketBar>(rawDataCsvPath);
+                logger.Log($"Loaded {rawData.Count} bars from cache: {rawDataCsvPath}");
             }
             else
             {
-                Console.WriteLine("Backtest finished with no trades executed.");
+                rawData = await polygonService.GetAggregates(ticker, startDate, endDate, timeFrame, timeFrameMultiplier);
+                dataHandler.SaveToCsv(rawData, rawDataCsvPath);
+                logger.Log($"Fetched and cached {rawData.Count} bars to: {rawDataCsvPath}");
             }
+
+            if (rawData.Count == 0)
+            {
+                logger.Log("No data available. Exiting.");
+                return;
+            }
+
+            // Split data: 80% train, 20% test (chronological)
+            //int testStartIndex = (int)(rawData.Count * 0.8);
+            //var trainData = rawData.Take(testStartIndex).ToList();
+            var testData = rawData.ToList();
+            //logger.Log($"Data split: {trainData.Count} train bars, {testData.Count} test bars");
+
+            // --- BACKTEST ---
+            //logger.Log("Running backtest on training data...");
+            //var trainResult = simulator.Run(trainData, startingCapital, allowShortSelling, takeProfitPercentage, stopLossPercentage);
+            //LogBacktestResults(trainResult, "Training", logger, backtestLogPath);
+
+            logger.Log("Running backtest on test data (OOS)...");
+            var testResult = simulator.Run(testData, startingCapital, allowShortSelling, takeProfitPercentage, stopLossPercentage);
+            LogBacktestResults(testResult, "Test (OOS)", logger, backtestLogPath);
+
+            logger.ConsolidateLogsForDay();
         }
 
-        static void PrintColoredLine(decimal value, int padding, string format)
+        private static void LogBacktestResults(BacktestResult result, string dataset, LoggerService logger, string backtestLogPath)
         {
-            Console.ForegroundColor = value >= 0 ? ConsoleColor.Green : ConsoleColor.Red;
-            Console.WriteLine(value.ToString(format).PadLeft(padding));
-            Console.ResetColor();
-        }
+            logger.Log($"\n--- {dataset} Backtest Results ---");
+            logger.Log($"Ending Capital: {result.EndingCapital:C}");
+            logger.Log($"Sharpe Ratio: {result.SharpeRatio:F2}");
+            logger.Log($"Max Drawdown: {result.MaxDrawdown:P2}");
+            logger.Log($"Win Rate: {result.WinRate:P2}");
+            logger.Log($"Total Trades: {result.TradeLog.Count}");
 
-        static void PrintColoredValueInTable(decimal value, int totalWidth, string format)
-        {
-            string text = value.ToString(format);
-            int padding = totalWidth - text.Length - 1; // -1 for the space
-            if (padding < 0) padding = 0;
+            var periodAnalysis = new BacktestSimulator(new GenericTradingStrategy()).GenerateTimePeriodAnalysis(result.TradeLog);
+            logger.Log("\n--- Intraday Performance ---");
+            logger.Log("+----------------+--------+----------+---------------+---------------+----------+");
+            logger.Log("| Period         | Trades | Win Rate | Avg P/L       | Total P/L     | Sharpe   |");
+            logger.Log("+----------------+--------+----------+---------------+---------------+----------+");
+            foreach (var period in periodAnalysis)
+            {
+                logger.Log($"| {period.Period,-14} | {period.NumberOfTrades,6} | {period.WinRate,7:P2} | {period.AverageProfitLoss,13:C} | {period.TotalProfitLoss,13:C} | {period.SharpeRatio,8:F2} |");
+            }
+            logger.Log("+----------------+--------+----------+---------------+---------------+----------+");
 
-            Console.Write(" "); // Leading space
-            Console.ForegroundColor = value >= 0 ? ConsoleColor.Green : ConsoleColor.Red;
-            Console.Write(text.PadLeft(totalWidth - 1));
-            Console.ResetColor();
+            var dailyStats = new Dictionary<DateTime, DailyStats>();
+            foreach (var trade in result.TradeLog)
+            {
+                TimeZoneInfo easternZone;
+                try { easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"); }
+                catch { easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York"); }
+                var entryEt = TimeZoneInfo.ConvertTimeFromUtc(trade.EntryTime, easternZone).Date;
+                if (!dailyStats.ContainsKey(entryEt))
+                    dailyStats[entryEt] = new DailyStats();
+                dailyStats[entryEt].TotalTrades++;
+                dailyStats[entryEt].TotalPnl += trade.ProfitLoss;
+                if (trade.ProfitLoss > 0) dailyStats[entryEt].WinningTrades++;
+            }
+
+            var last30TradingDays = dailyStats.OrderByDescending(kvp => kvp.Key).Take(30).OrderBy(kvp => kvp.Key).ToList();
+            logger.Log($"\n--- Last 30 Trading Days ({dataset}) ---");
+            logger.Log("+------------+-----------+---------------+---------------+");
+            logger.Log("| Date       | Day       | Trades (W/T)  | Daily P/L     |");
+            logger.Log("+------------+-----------+---------------+---------------+");
+            foreach (var day in last30TradingDays)
+            {
+                var stats = day.Value;
+                string tradeStats = $"{stats.WinningTrades}/{stats.TotalTrades}";
+                logger.Log($"| {day.Key:yyyy-MM-dd} | {day.Key.DayOfWeek,-9} | {tradeStats,13} | {stats.TotalPnl,13:C} |");
+            }
+            logger.Log("+------------+-----------+---------------+---------------+");
+
+            var csvLines = new List<string> { "EntryTime,Signal,EntryPrice,ExitPrice,ProfitLoss" };
+            csvLines.AddRange(result.TradeLog.Select(t => $"{t.EntryTime:yyyy-MM-dd HH:mm:ss},{t.Signal},{t.EntryPrice},{t.ExitPrice},{t.ProfitLoss}"));
+            File.WriteAllLines(backtestLogPath, csvLines);
+            logger.Log($"Results saved to: {backtestLogPath}");
         }
     }
 }

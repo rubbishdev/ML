@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eGJbNwD9PjU=",
+  "dgSpecHash": "G7ugIlTfQQI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLBackTest\\MLBackTest.csproj",
+  "projectFilePath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MLBackTest\\MLBackTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Himanshu\\.nuget\\packages\\alpaca.markets\\7.2.0\\alpaca.markets.7.2.0.nupkg.sha512",
     "C:\\Users\\Himanshu\\.nuget\\packages\\alpaca.markets.extensions\\7.2.0\\alpaca.markets.extensions.7.2.0.nupkg.sha512",

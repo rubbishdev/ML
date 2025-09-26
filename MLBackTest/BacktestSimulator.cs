@@ -1,5 +1,5 @@
 ﻿using DataModels;
-using Microsoft.ML;
+using Strategies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +10,40 @@ namespace MLBackTest
     {
         public List<TradeLog> TradeLog { get; set; }
         public decimal EndingCapital { get; set; }
+        public double SharpeRatio { get; set; }
+        public decimal MaxDrawdown { get; set; }
+        public double WinRate { get; set; }
     }
 
     public class BacktestSimulator
     {
-        private const decimal SlippageAndCommission = 0.0005m;
+        private readonly TradingStrategyBase _strategy;
+        private const decimal SlippageAndCommission = 0.001m;
+        private const decimal DailyLossCap = -0.02m;
+        private const decimal MaxPositionSizePercentage = 0.50m;
+        private const int MaxTradesPerDay = 5;
 
-        public BacktestResult Run(List<ModelInput> backtestData, ITransformer model, MLContext mlContext, decimal startingCapital, bool allowShortSelling, decimal takeProfitPercentage, decimal stopLossPercentage)
+        public BacktestSimulator(TradingStrategyBase strategy)
+        {
+            _strategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
+            _strategy.Initialize();
+        }
+
+        public BacktestResult Run(List<MarketBar> backtestData, decimal startingCapital, bool allowShortSelling, decimal takeProfitPercentage, decimal stopLossPercentage)
         {
             var tradeLog = new List<TradeLog>();
-            var predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(model);
-
             decimal accountBalance = startingCapital;
+            decimal peakBalance = startingCapital;
+            List<decimal> equityCurve = new List<decimal> { startingCapital };
+            List<decimal> dailyReturns = new List<decimal>();
             TradeLog currentTrade = null;
             int sharesToTrade = 0;
+            decimal trailingStopPrice = 0m;
+            decimal dailyStartingBalance = startingCapital;
+            decimal dailyPnl = 0m;
+            int dailyTradeCount = 0;
+            DateTime currentDay = DateTime.MinValue;
+            decimal previousBalance = startingCapital;
 
             TimeZoneInfo easternZone;
             try { easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"); }
@@ -32,73 +52,106 @@ namespace MLBackTest
             var marketOpen = new TimeSpan(9, 30, 0);
             var marketClose = new TimeSpan(16, 0, 0);
 
-            for (int i = 0; i < backtestData.Count; i++)
+            for (int i = Math.Max(26, 14); i < backtestData.Count; i++) // Ensure enough data for EMA/RSI
             {
                 var currentDataPoint = backtestData[i];
-                var prediction = predictionEngine.Predict(currentDataPoint);
-
                 var currentUtcTime = DateTimeOffset.FromUnixTimeMilliseconds(currentDataPoint.Timestamp).UtcDateTime;
                 var currentEtTime = TimeZoneInfo.ConvertTimeFromUtc(currentUtcTime, easternZone);
                 bool isMarketHours = currentEtTime.TimeOfDay >= marketOpen && currentEtTime.TimeOfDay < marketClose;
 
+                // Reset daily metrics
+                if (currentEtTime.Date != currentDay)
+                {
+                    dailyStartingBalance = accountBalance;
+                    dailyPnl = 0m;
+                    dailyTradeCount = 0;
+                    currentDay = currentEtTime.Date;
+                }
+
+                if (dailyPnl / dailyStartingBalance <= DailyLossCap || dailyTradeCount >= MaxTradesPerDay)
+                    continue;
+
+                var historicalBars = backtestData.Take(i + 1).ToList();
+                var signal = _strategy.GenerateSignal(currentDataPoint, historicalBars);
+
                 if (currentTrade == null && isMarketHours)
                 {
-                    bool isSellSignal = prediction.PredictedLabel == "Sell";
-                    if (prediction.PredictedLabel == "Buy" || (isSellSignal && allowShortSelling))
+                    bool isSellSignal = signal == "Sell";
+                    if (signal == "Buy" || (isSellSignal && allowShortSelling))
                     {
-                        sharesToTrade = (int)(accountBalance / (decimal)currentDataPoint.Close);
+                        var atr = CalculateATR(historicalBars, 14);
+                        decimal riskPerShare = atr * 2; // 2x ATR for stop
+                        sharesToTrade = (int)(accountBalance * 0.01m / riskPerShare); // 1% risk
+                        sharesToTrade = Math.Min(sharesToTrade, (int)(accountBalance * MaxPositionSizePercentage / currentDataPoint.Close));
+
                         if (sharesToTrade > 0)
                         {
                             currentTrade = new TradeLog
                             {
-                                EntryTime = currentUtcTime,
-                                Signal = prediction.PredictedLabel,
-                                EntryPrice = (decimal)currentDataPoint.Close
+                                EntryTime = currentEtTime,
+                                Signal = signal,
+                                EntryPrice = currentDataPoint.Close * (1 + (isSellSignal ? -SlippageAndCommission : SlippageAndCommission)),
                             };
-                            var entryTimeEt = TimeZoneInfo.ConvertTimeFromUtc(currentTrade.EntryTime, easternZone);
-                            Console.WriteLine($"{entryTimeEt:yyyy-MM-dd HH:mm:ss ET} | OPEN  | {currentTrade.Signal.ToUpper(),-4} | {sharesToTrade,5} shares @ {currentTrade.EntryPrice,8:C} | Value: {(currentTrade.EntryPrice * sharesToTrade),12:C}");
+                            trailingStopPrice = currentTrade.EntryPrice * (isSellSignal ? (1 + stopLossPercentage) : (1 - stopLossPercentage));
+                            dailyTradeCount++;
                         }
                     }
                 }
                 else if (currentTrade != null)
                 {
-                    decimal currentPrice = (decimal)currentDataPoint.Close;
-                    decimal pnlPercentage = 0;
-                    if (currentTrade.EntryPrice > 0)
+                    bool isSellSignal = currentTrade.Signal == "Sell";
+                    decimal currentPrice = currentDataPoint.Close;
+                    decimal takeProfitPrice = currentTrade.EntryPrice * (isSellSignal ? (1 - takeProfitPercentage) : (1 + takeProfitPercentage));
+                    decimal stopLossPrice = currentTrade.EntryPrice * (isSellSignal ? (1 + stopLossPercentage) : (1 - stopLossPercentage));
+
+                    // Update trailing stop
+                    var atr = CalculateATR(historicalBars, 14);
+                    if (isSellSignal)
                     {
-                        pnlPercentage = (currentTrade.Signal == "Buy")
-                            ? (currentPrice - currentTrade.EntryPrice) / currentTrade.EntryPrice
-                            : (currentTrade.EntryPrice - currentPrice) / currentTrade.EntryPrice;
+                        if (currentPrice < trailingStopPrice)
+                            trailingStopPrice = Math.Min(trailingStopPrice, currentPrice * (1 + atr * 2 / currentPrice));
+                    }
+                    else
+                    {
+                        if (currentPrice > trailingStopPrice)
+                            trailingStopPrice = Math.Max(trailingStopPrice, currentPrice * (1 - atr * 2 / currentPrice));
                     }
 
-                    bool takeProfitHit = pnlPercentage >= takeProfitPercentage;
-                    bool stopLossHit = pnlPercentage <= -stopLossPercentage;
-                    bool contrarySignal = (currentTrade.Signal == "Buy" && prediction.PredictedLabel == "Sell") || (currentTrade.Signal == "Sell" && prediction.PredictedLabel == "Buy");
-                    bool isEndOfDay = currentEtTime.TimeOfDay >= marketClose;
+                    bool exitCondition = isSellSignal
+                        ? (currentPrice <= takeProfitPrice || currentPrice >= stopLossPrice || currentPrice >= trailingStopPrice || currentEtTime.TimeOfDay >= marketClose)
+                        : (currentPrice >= takeProfitPrice || currentPrice <= stopLossPrice || currentPrice <= trailingStopPrice || currentEtTime.TimeOfDay >= marketClose);
 
-                    if (contrarySignal || isEndOfDay || takeProfitHit || stopLossHit)
+                    if (exitCondition)
                     {
-                        currentTrade.ExitPrice = currentPrice;
-                        var profitPerShare = currentTrade.ExitPrice - currentTrade.EntryPrice;
-                        if (currentTrade.Signal == "Sell") profitPerShare = -profitPerShare;
-
-                        var totalProfit = (profitPerShare * sharesToTrade) - (currentTrade.EntryPrice * sharesToTrade * SlippageAndCommission) - (currentTrade.ExitPrice * sharesToTrade * SlippageAndCommission);
-                        currentTrade.ProfitLoss = totalProfit;
-                        accountBalance += totalProfit;
+                        currentTrade.ExitPrice = currentPrice * (1 + (isSellSignal ? SlippageAndCommission : -SlippageAndCommission));
+                        currentTrade.ProfitLoss = (isSellSignal ? (currentTrade.EntryPrice - currentTrade.ExitPrice) : (currentTrade.ExitPrice - currentTrade.EntryPrice)) * sharesToTrade;
+                        accountBalance += currentTrade.ProfitLoss;
+                        dailyPnl += currentTrade.ProfitLoss;
                         tradeLog.Add(currentTrade);
 
-                        var exitTimeEt = TimeZoneInfo.ConvertTimeFromUtc(currentUtcTime, easternZone);
-                        Console.Write($"{exitTimeEt:yyyy-MM-dd HH:mm:ss ET} | CLOSE | {currentTrade.Signal.ToUpper(),-4} | {sharesToTrade,5} shares @ {currentTrade.ExitPrice,8:C} | P/L:   ");
-                        Console.ForegroundColor = currentTrade.ProfitLoss >= 0 ? ConsoleColor.Green : ConsoleColor.Red;
-                        Console.WriteLine($"{currentTrade.ProfitLoss,12:C}");
-                        Console.ResetColor();
+                        equityCurve.Add(accountBalance);
+                        dailyReturns.Add((accountBalance - previousBalance) / previousBalance);
+                        peakBalance = Math.Max(peakBalance, accountBalance);
+                        previousBalance = accountBalance;
 
                         currentTrade = null;
                         sharesToTrade = 0;
                     }
                 }
             }
-            return new BacktestResult { TradeLog = tradeLog, EndingCapital = accountBalance };
+
+            var winRate = tradeLog.Count > 0 ? tradeLog.Count(t => t.ProfitLoss > 0) / (double)tradeLog.Count : 0;
+            var sharpe = dailyReturns.Count > 1 ? CalculateSharpeRatio(dailyReturns) : 0;
+            var maxDD = CalculateMaxDrawdown(equityCurve, peakBalance);
+
+            return new BacktestResult
+            {
+                TradeLog = tradeLog,
+                EndingCapital = accountBalance,
+                SharpeRatio = sharpe,
+                MaxDrawdown = maxDD,
+                WinRate = winRate
+            };
         }
 
         public List<TimePeriodAnalysis> GenerateTimePeriodAnalysis(List<TradeLog> tradeLog)
@@ -108,27 +161,22 @@ namespace MLBackTest
             try { easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"); }
             catch { easternZone = TimeZoneInfo.FindSystemTimeZoneById("America/New_York"); }
 
-            var openTrades = tradeLog.Where(r =>
+            var periods = new Dictionary<string, (TimeSpan start, TimeSpan end)>
             {
-                var entryTimeEt = TimeZoneInfo.ConvertTimeFromUtc(r.EntryTime, easternZone);
-                return entryTimeEt.Hour >= 9 && entryTimeEt.Hour < 11;
-            }).ToList();
+                { "Market Open", (new TimeSpan(9, 30, 0), new TimeSpan(11, 0, 0)) },
+                { "Mid-Day", (new TimeSpan(11, 0, 0), new TimeSpan(15, 0, 0)) },
+                { "Market Close", (new TimeSpan(15, 0, 0), new TimeSpan(16, 0, 0)) }
+            };
 
-            var midDayTrades = tradeLog.Where(r =>
+            foreach (var period in periods)
             {
-                var entryTimeEt = TimeZoneInfo.ConvertTimeFromUtc(r.EntryTime, easternZone);
-                return entryTimeEt.Hour >= 11 && entryTimeEt.Hour < 15;
-            }).ToList();
-
-            var closeTrades = tradeLog.Where(r =>
-            {
-                var entryTimeEt = TimeZoneInfo.ConvertTimeFromUtc(r.EntryTime, easternZone);
-                return entryTimeEt.Hour >= 15 && entryTimeEt.Hour < 16;
-            }).ToList();
-
-            analysis.Add(AnalyzePeriod("Market Open", openTrades));
-            analysis.Add(AnalyzePeriod("Mid-Day", midDayTrades));
-            analysis.Add(AnalyzePeriod("Market Close", closeTrades));
+                var trades = tradeLog.Where(t =>
+                {
+                    var entryTimeEt = TimeZoneInfo.ConvertTimeFromUtc(t.EntryTime, easternZone).TimeOfDay;
+                    return entryTimeEt >= period.Value.start && entryTimeEt < period.Value.end;
+                }).ToList();
+                analysis.Add(AnalyzePeriod(period.Key, trades));
+            }
 
             return analysis;
         }
@@ -137,14 +185,62 @@ namespace MLBackTest
         {
             var totalTrades = trades.Count;
             var winningTrades = trades.Count(t => t.ProfitLoss > 0);
+            var totalPnl = trades.Sum(t => t.ProfitLoss);
+            var avgPnl = totalTrades > 0 ? trades.Average(t => t.ProfitLoss) : 0;
+            var returns = trades.Select(t => t.ProfitLoss / (t.EntryPrice * (t.ExitPrice - t.EntryPrice > 0 ? 1 : -1))).ToList();
+            var sharpe = returns.Count > 1 ? CalculateSharpeRatio(returns) : 0;
 
             return new TimePeriodAnalysis
             {
                 Period = periodName,
                 NumberOfTrades = totalTrades,
                 WinRate = totalTrades > 0 ? (double)winningTrades / totalTrades : 0,
-                AverageProfitLoss = totalTrades > 0 ? trades.Average(t => t.ProfitLoss) : 0
+                AverageProfitLoss = avgPnl,
+                TotalProfitLoss = totalPnl,
+                SharpeRatio = sharpe
             };
         }
+
+        private double CalculateSharpeRatio(List<decimal> returns)
+        {
+            if (returns.Count == 0) return 0;
+            var avgReturn = returns.Average();
+            var stdDev = Math.Sqrt(returns.Average(v => Math.Pow((double)(v - avgReturn), 2)));
+            return stdDev == 0 ? 0 : (double)avgReturn / stdDev * Math.Sqrt(252); // Annualized
+        }
+
+        private decimal CalculateMaxDrawdown(List<decimal> equityCurve, decimal peakBalance)
+        {
+            decimal maxDD = 0;
+            decimal peak = peakBalance;
+            foreach (var equity in equityCurve)
+            {
+                peak = Math.Max(peak, equity);
+                decimal dd = (peak - equity) / peak;
+                if (dd > maxDD) maxDD = dd;
+            }
+            return maxDD;
+        }
+
+        private decimal CalculateATR(List<MarketBar> bars, int period)
+        {
+            if (bars.Count < period) return 0;
+            var tr = new List<decimal>();
+            for (int j = 1; j < bars.Count; j++)
+            {
+                tr.Add(Math.Max(bars[j].High - bars[j].Low, Math.Max(Math.Abs(bars[j].High - bars[j - 1].Close), Math.Abs(bars[j].Low - bars[j - 1].Close))));
+            }
+            return tr.GetRange(tr.Count - period, period).Average();
+        }
+    }
+
+    public class TimePeriodAnalysis
+    {
+        public string Period { get; set; }
+        public int NumberOfTrades { get; set; }
+        public double WinRate { get; set; }
+        public decimal AverageProfitLoss { get; set; }
+        public decimal TotalProfitLoss { get; set; }
+        public double SharpeRatio { get; set; }
     }
 }

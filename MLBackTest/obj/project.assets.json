@@ -2613,11 +2613,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLBackTest\\MLBackTest.csproj",
+      "projectUniqueName": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MLBackTest\\MLBackTest.csproj",
       "projectName": "MLBackTest",
-      "projectPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLBackTest\\MLBackTest.csproj",
+      "projectPath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MLBackTest\\MLBackTest.csproj",
       "packagesPath": "C:\\Users\\Himanshu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLBackTest\\obj\\",
+      "outputPath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MLBackTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2638,20 +2638,20 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\AlpacaService\\AlpacaService.csproj": {
-              "projectPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\AlpacaService\\AlpacaService.csproj"
+            "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\AlpacaService\\AlpacaService.csproj": {
+              "projectPath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\AlpacaService\\AlpacaService.csproj"
             },
-            "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\DataModels\\DataModels.csproj": {
-              "projectPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\DataModels\\DataModels.csproj"
+            "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\DataModels\\DataModels.csproj": {
+              "projectPath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\DataModels\\DataModels.csproj"
             },
-            "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MachineLearningProcessor\\MachineLearningProcessor.csproj": {
-              "projectPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MachineLearningProcessor\\MachineLearningProcessor.csproj"
+            "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MachineLearningProcessor\\MachineLearningProcessor.csproj": {
+              "projectPath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MachineLearningProcessor\\MachineLearningProcessor.csproj"
             },
-            "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLTrading\\MLTrading.csproj": {
-              "projectPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\MLTrading\\MLTrading.csproj"
+            "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MLTrading\\MLTrading.csproj": {
+              "projectPath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\MLTrading\\MLTrading.csproj"
             },
-            "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\PolygonService\\PolygonService.csproj": {
-              "projectPath": "C:\\Users\\Himanshu\\source\\repos\\MachineLearningAlgo\\PolygonService\\PolygonService.csproj"
+            "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\PolygonService\\PolygonService.csproj": {
+              "projectPath": "C:\\Users\\Himanshu\\Documents\\GitHub\\ML\\MachineLearningAlgo\\PolygonService\\PolygonService.csproj"
             }
           }
         }

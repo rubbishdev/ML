@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MachineLearningProcessor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b16be50b43ec3b6e80abff273df7ee98c90254d")]
 [assembly: System.Reflection.AssemblyProductAttribute("MachineLearningProcessor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MachineLearningProcessor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

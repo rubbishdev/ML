@@ -229,9 +229,12 @@
   <ItemGroup>
     <Compile Include="AlpacaModels.cs" />
     <Compile Include="BackTestModels.cs" />
+    <Compile Include="GenericTradingStrategy.cs" />
     <Compile Include="MLModels.cs" />
     <Compile Include="PolygonModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TradingStrategyBase.cs" />
+    <Compile Include="WeightedModelInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

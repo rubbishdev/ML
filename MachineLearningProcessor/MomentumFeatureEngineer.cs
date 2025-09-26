@@ -1,4 +1,5 @@
-﻿using DataModels;
+﻿// Updated MachineLearningProcessor/MomentumFeatureEngineer.cs (with new features)
+using DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,31 +17,45 @@ namespace MachineLearningProcessor
         private const int VolumeSpikePeriod = 20;
         private const int TransactionSpikePeriod = 20;
         private const int SmaPeriod = 50;
+        private const int AtrPeriod = 14;
+        private const int BollingerPeriod = 20; // Standard for Bollinger Bands
+        private const int BollingerStdDev = 2; // Standard multiplier
 
         // How many bars into the future to look for a signal (6 * 5min = 30 minutes)
         private const int FutureWindow = 6;
 
-        // EXPERIMENT: Reverting to a symmetrical threshold to improve precision.
-        private const decimal ProfitThreshold = 0.002m; // 0.2% profit or loss threshold for a signal
+        // Adjusted threshold: Increased to 0.3% for better signal separation
+        private const decimal ProfitThreshold = 0.002m; // 0.3% profit or loss threshold for a signal
 
         public List<ModelInput> GenerateFeaturesAndLabels(List<MarketBar> rawData)
         {
             var allData = new List<ModelInput>();
-            var closePrices = rawData.Select(b => b.Close).ToList();
-            var highPrices = rawData.Select(b => b.High).ToList();
-            var lowPrices = rawData.Select(b => b.Low).ToList();
-            var volumes = rawData.Select(b => b.Volume).ToList();
-            var transactions = rawData.Select(b => b.NumberOfTransactions).ToList();
-            var vwap = rawData.Select(b => b.VolumeWeightedAveragePrice).ToList();
+            var closePrices = rawData.Select(b => (decimal)b.Close).ToList();
+            var highPrices = rawData.Select(b => (decimal)b.High).ToList();
+            var lowPrices = rawData.Select(b => (decimal)b.Low).ToList();
+            var volumes = rawData.Select(b => (decimal)b.Volume).ToList();
+            var transactions = rawData.Select(b => (decimal)b.NumberOfTransactions).ToList();
+            var vwap = rawData.Select(b => (decimal)b.VolumeWeightedAveragePrice).ToList();
 
             // Calculate SMAs for price, volume, and transactions
             var priceSma = CalculateSMA(closePrices, SmaPeriod);
-            var volumeSma = CalculateSMA(volumes.Select(v => (decimal)v).ToList(), VolumeSpikePeriod);
-            var transactionSma = CalculateSMA(transactions.Select(t => (decimal)t).ToList(), TransactionSpikePeriod);
+            var volumeSma = CalculateSMA(volumes, VolumeSpikePeriod);
+            var transactionSma = CalculateSMA(transactions, TransactionSpikePeriod);
+
+            // Precompute RSIs for lagging
+            var rsis = new List<decimal>();
+            for (int i = 0; i < rawData.Count; i++)
+            {
+                rsis.Add(CalculateRSI(closePrices.GetRange(0, i + 1), RsiPeriod));
+            }
+
+            // Precompute Bollinger %B
+            var bollingerPercentB = CalculateBollingerPercentB(closePrices, BollingerPeriod, BollingerStdDev);
 
             for (int i = SmaPeriod; i < rawData.Count - FutureWindow; i++)
             {
                 var currentBar = rawData[i];
+                var dto = DateTimeOffset.FromUnixTimeMilliseconds(currentBar.Timestamp);
                 var modelInput = new ModelInput
                 {
                     // Raw Data
@@ -52,24 +67,25 @@ namespace MachineLearningProcessor
                     Timestamp = currentBar.Timestamp,
 
                     // Engineered Features
-                    RSI = (float)CalculateRSI(closePrices.GetRange(0, i + 1), RsiPeriod),
+                    RSI = (float)rsis[i],
                     StochasticOscillator = (float)CalculateStochasticOscillator(closePrices.GetRange(0, i + 1), highPrices.GetRange(0, i + 1), lowPrices.GetRange(0, i + 1), StochasticPeriod),
                     MACD = (float)CalculateMACD(closePrices.GetRange(0, i + 1), MacdFastPeriod, MacdSlowPeriod),
                     PriceChangePercentage = i > PriceChangePeriod ? (float)((currentBar.Close - rawData[i - PriceChangePeriod].Close) / rawData[i - PriceChangePeriod].Close) : 0,
-                    VolumeSpike = volumeSma[i] > 0 ? (float)((currentBar.Volume - volumeSma[i]) / volumeSma[i]) : 0,
-                    VwapCloseDifference = currentBar.VolumeWeightedAveragePrice > 0 ? (float)((currentBar.Close - currentBar.VolumeWeightedAveragePrice) / currentBar.VolumeWeightedAveragePrice) : 0,
-                    TransactionSpike = transactionSma[i] > 0 ? (float)((currentBar.NumberOfTransactions - transactionSma[i]) / transactionSma[i]) : 0,
+                    VolumeSpike = volumeSma[i] > 0 ? (float)((volumes[i] - volumeSma[i]) / volumeSma[i]) : 0,
+                    VwapCloseDifference = (float)((currentBar.Close - currentBar.VolumeWeightedAveragePrice) / currentBar.VolumeWeightedAveragePrice),
+                    TransactionSpike = transactionSma[i] > 0 ? (float)((transactions[i] - transactionSma[i]) / transactionSma[i]) : 0,
                     PriceSmaDifference = priceSma[i] > 0 ? (float)((currentBar.Close - priceSma[i]) / priceSma[i]) : 0,
-                    TimeOfDay = (float)currentBar.Date.TimeOfDay.TotalHours,
+                    TimeOfDay = (float)(dto.LocalDateTime.TimeOfDay.TotalMinutes / 1440.0),
+                    ATR = (float)CalculateATR(highPrices.GetRange(0, i + 1), lowPrices.GetRange(0, i + 1), closePrices.GetRange(0, i + 1), AtrPeriod),
+                    BollingerPercentB = (float)bollingerPercentB[i],
+                    RSI_Lag1 = i > 0 ? (float)rsis[i - 1] : (float)rsis[i] // Lag1, default to current if first
                 };
 
-                // Updated Labeling logic with symmetrical thresholds
-                var futureSlice = rawData.GetRange(i + 1, FutureWindow);
-                var peakFuturePrice = futureSlice.Max(b => b.High);
-                var troughFuturePrice = futureSlice.Min(b => b.Low);
-
-                var potentialProfit = (peakFuturePrice - currentBar.Close) / currentBar.Close;
-                var potentialLoss = (troughFuturePrice - currentBar.Close) / currentBar.Close;
+                // Label Generation
+                decimal maxFutureHigh = rawData.GetRange(i + 1, FutureWindow).Max(b => (decimal)b.High);
+                decimal minFutureLow = rawData.GetRange(i + 1, FutureWindow).Min(b => (decimal)b.Low);
+                decimal potentialProfit = (maxFutureHigh - (decimal)currentBar.Close) / (decimal)currentBar.Close;
+                decimal potentialLoss = (minFutureLow - (decimal)currentBar.Close) / (decimal)currentBar.Close;
 
                 if (potentialProfit > ProfitThreshold)
                 {
@@ -87,6 +103,41 @@ namespace MachineLearningProcessor
                 allData.Add(modelInput);
             }
             return allData;
+        }
+
+        // --- New: Bollinger %B Calculation ---
+        private static List<decimal> CalculateBollingerPercentB(List<decimal> closePrices, int period, int stdDevMultiplier)
+        {
+            var percentB = new List<decimal>(new decimal[closePrices.Count]);
+            var sma = CalculateSMA(closePrices, period);
+
+            for (int i = 0; i < closePrices.Count; i++)
+            {
+                if (i < period - 1)
+                {
+                    percentB[i] = 50; // Default neutral
+                    continue;
+                }
+
+                // Calculate STD
+                var slice = closePrices.GetRange(i - period + 1, period);
+                decimal avg = sma[i];
+                decimal variance = slice.Sum(p => (p - avg) * (p - avg)) / period;
+                decimal stdDev = (decimal)Math.Sqrt((double)variance);
+
+                decimal upperBand = avg + stdDev * stdDevMultiplier;
+                decimal lowerBand = avg - stdDev * stdDevMultiplier;
+
+                if (upperBand == lowerBand)
+                {
+                    percentB[i] = 50;
+                }
+                else
+                {
+                    percentB[i] = 100 * (closePrices[i] - lowerBand) / (upperBand - lowerBand);
+                }
+            }
+            return percentB;
         }
 
         // --- Technical Indicator Calculation Methods ---
@@ -163,6 +214,16 @@ namespace MachineLearningProcessor
             }
             return ema;
         }
+
+        private static decimal CalculateATR(List<decimal> high, List<decimal> low, List<decimal> close, int period)
+        {
+            if (high.Count < period) return 0;
+            var tr = new List<decimal>();
+            for (int j = 1; j < high.Count; j++)
+            {
+                tr.Add(Math.Max(high[j] - low[j], Math.Max(Math.Abs(high[j] - close[j - 1]), Math.Abs(low[j] - close[j - 1]))));
+            }
+            return CalculateEMA(tr.GetRange(tr.Count - period, period), period).Last();
+        }
     }
 }
-

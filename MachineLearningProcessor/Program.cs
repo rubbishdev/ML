@@ -1,4 +1,5 @@
-﻿using DataModels;
+﻿// Updated MachineLearningProcessor/Program.cs (with dynamic 20% holdout)
+using DataModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.ML;
 using PolygonService;
@@ -26,7 +27,10 @@ namespace MachineLearningProcessor
             var polygonApiKey = config["PolygonApiKey"];
             var ticker = config.GetSection("TradingConfig")["Ticker"];
             var startDate = config.GetSection("TradingConfig")["StartDate"];
-            var endDate = config.GetSection("TradingConfig")["EndDate"];
+            // Dynamically set endDate to end of the year (Dec 31 of the current year)
+            int currentYear = DateTime.UtcNow.Year;
+            var endDate = $"{currentYear}-12-31";
+
             var timeFrame = config.GetSection("TradingConfig")["TimeFrame"];
             var timeFrameMultiplier = int.Parse(config.GetSection("TradingConfig")["TimeFrameMultiplier"]);
 
@@ -34,7 +38,6 @@ namespace MachineLearningProcessor
             string solutionRoot = Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
             string projectRoot = Path.Combine(solutionRoot, "MachineLearningProcessor");
             var dataPath = Path.Combine(projectRoot, "Data");
-
 
             var fileNameSafeStartDate = startDate.Replace("-", "");
             var fileNameSafeEndDate = endDate.Replace("-", "");
@@ -47,7 +50,7 @@ namespace MachineLearningProcessor
             Directory.CreateDirectory(dataPath);
 
             // --- SERVICES ---
-            var polygonService = new PolygonApiService(polygonApiKey);
+            var polygonService = new PolygonApiService(polygonApiKey, ticker);
             var dataHandler = new DataHandler();
             var featureEngineer = new MomentumFeatureEngineer();
             var mlContext = new MLContext(seed: 0);
@@ -76,31 +79,47 @@ namespace MachineLearningProcessor
 
             // STEP 2: Feature Engineering
             Console.WriteLine("\nStarting Step 2: Feature Engineering...");
-            var rawData = dataHandler.LoadFromCsv<MarketBar>(rawDataCsvPath);
-            var featuredData = featureEngineer.GenerateFeaturesAndLabels(rawData);
-            dataHandler.SaveToCsv(featuredData, featureDataCsvPath);
-            Console.WriteLine($"Feature engineering complete. Saved {featuredData.Count} data points to {featureDataCsvPath}");
-
-            if (!featuredData.Any())
+            List<ModelInput> featuredData;
+            if (!File.Exists(featureDataCsvPath))
             {
-                Console.WriteLine("No feature data was generated. Cannot train model. Exiting.");
-                return;
+                Console.WriteLine("Generating features and labels...");
+                var rawData = dataHandler.LoadFromCsv<MarketBar>(rawDataCsvPath);
+                featuredData = featureEngineer.GenerateFeaturesAndLabels(rawData);
+                dataHandler.SaveToCsv(featuredData, featureDataCsvPath);
+                Console.WriteLine($"Successfully generated and saved {featuredData.Count} featured data points to {featureDataCsvPath}");
+            }
+            else
+            {
+                Console.WriteLine($"Featured data file found at {featureDataCsvPath}. Skipping feature engineering.");
+                featuredData = dataHandler.LoadFromCsv<ModelInput>(featureDataCsvPath);
             }
 
-            // --- EXPERIMENT: PERFECT 1:1:1 BALANCING ---
-            // The goal is to create a training set with an equal number of each class.
-            var random = new Random();
-            var buys = featuredData.Where(d => d.Label == "Buy").ToList();
-            var sells = featuredData.Where(d => d.Label == "Sell").ToList();
-            var holds = featuredData.Where(d => d.Label == "Hold").ToList();
+            // Sort by timestamp for chronological splitting
+            featuredData = featuredData.OrderBy(d => d.Timestamp).ToList();
 
-            // Find the count of the smallest class
+            // Dynamically hold out the last 20% for OOS (no matter when run)
+            int totalSamples = featuredData.Count;
+            int trainSize = (int)(totalSamples * 0.8);
+            var trainFeaturedData = featuredData.Take(trainSize).ToList();
+            var oosFeaturedData = featuredData.Skip(trainSize).ToList();
+
+            Console.WriteLine($"\nTotal data: {totalSamples} samples.");
+            Console.WriteLine($"Training data: {trainFeaturedData.Count} samples (first 80%).");
+            Console.WriteLine($"OOS holdout: {oosFeaturedData.Count} samples (last 20%).");
+
+            // Balance the training dataset using undersampling (only on trainFeaturedData)
+            var random = new Random(0); // For reproducibility
+            var buys = trainFeaturedData.Where(d => d.Label == "Buy").ToList();
+            var sells = trainFeaturedData.Where(d => d.Label == "Sell").ToList();
+            var holds = trainFeaturedData.Where(d => d.Label == "Hold").ToList();
+
+            // Find the count of the smallest class in training data
             var minCount = Math.Min(buys.Count, Math.Min(sells.Count, holds.Count));
 
             // If any class has zero samples, we can't proceed with this method.
             if (minCount == 0)
             {
-                Console.WriteLine("One of the classes (Buy, Sell, or Hold) has zero samples. Cannot create a balanced dataset. Exiting.");
+                Console.WriteLine("One of the classes (Buy, Sell, or Hold) has zero samples in training data. Cannot create a balanced dataset. Exiting.");
                 return;
             }
 
@@ -109,51 +128,104 @@ namespace MachineLearningProcessor
             var undersampledSells = sells.OrderBy(x => random.Next()).Take(minCount).ToList();
             var undersampledHolds = holds.OrderBy(x => random.Next()).Take(minCount).ToList();
 
-            var balancedFeaturedData = new List<ModelInput>();
-            balancedFeaturedData.AddRange(undersampledBuys);
-            balancedFeaturedData.AddRange(undersampledSells);
-            balancedFeaturedData.AddRange(undersampledHolds);
+            var balancedTrainData = undersampledBuys.Concat(undersampledSells).Concat(undersampledHolds).OrderBy(x => x.Timestamp).ToList(); // Sort by time after balancing
 
-            // Shuffle the balanced dataset
-            var shuffledBalancedData = balancedFeaturedData.OrderBy(x => random.Next()).ToList();
+            Console.WriteLine($"\nTraining data counts: Holds={holds.Count}, Buys={buys.Count}, Sells={sells.Count}");
+            Console.WriteLine($"Perfectly balanced 1:1:1 training data: {balancedTrainData.Count} total rows. ({minCount} of each class)");
 
-            Console.WriteLine($"\nOriginal data counts: Holds={holds.Count}, Buys={buys.Count}, Sells={sells.Count}");
-            Console.WriteLine($"Perfectly balanced 1:1:1 training data: {shuffledBalancedData.Count} total rows. ({minCount} of each class)");
+            // STEP 3: Hyperparameter Tuning with Time-Series Cross-Validation (on balanced training data)
+            Console.WriteLine("\nStarting Step 3: Hyperparameter Tuning with Time-Series CV...");
 
-            // STEP 3: Model Selection and Training
-            Console.WriteLine("\nStarting Step 3: Model Selection and Training...");
-            // IMPORTANT: We now train on the balanced data, but test on the original, imbalanced data
-            // This gives a true picture of how the model will perform in the real world.
-            IDataView balancedDataView = mlContext.Data.LoadFromEnumerable(shuffledBalancedData);
-            IDataView originalDataView = mlContext.Data.LoadFromEnumerable(featuredData);
+            // Define grid search parameters for LightGBM
+            var numLeavesOptions = new[] { 30, 50, 100 };
+            var numIterationsOptions = new[] { 100, 200, 500 };
 
-            // We only need a test set from the original data
-            var dataSplit = mlContext.Data.TrainTestSplit(originalDataView, testFraction: 0.2);
-            IDataView testData = dataSplit.TestSet;
+            ITransformer bestModel = null;
+            double bestLogLoss = double.MaxValue;
+            int bestNumLeaves = 0;
+            int bestNumIterations = 0;
 
-            var pipeline = ModelTrainer.BuildTrainingPipeline(mlContext, balancedDataView);
+            // Time-series CV: Split into 5 folds chronologically (80% train, 20% val per fold)
+            int numFolds = 5;
+            int foldSize = balancedTrainData.Count / numFolds;
 
-            Console.WriteLine("Training the model on perfectly balanced data...");
-            var model = pipeline.Fit(balancedDataView);
-            Console.WriteLine("Model training complete.");
+            for (int leavesIdx = 0; leavesIdx < numLeavesOptions.Length; leavesIdx++)
+            {
+                int numLeaves = numLeavesOptions[leavesIdx];
+                for (int itersIdx = 0; itersIdx < numIterationsOptions.Length; itersIdx++)
+                {
+                    int numIterations = numIterationsOptions[itersIdx];
+                    double avgLogLoss = 0;
 
-            Console.WriteLine("Evaluating model performance on original (unseen) data...");
-            var predictions = model.Transform(testData);
-            var metrics = mlContext.MulticlassClassification.Evaluate(predictions, "Label");
+                    for (int fold = 0; fold < numFolds; fold++)
+                    {
+                        // Chronological split: Earlier data for train, later for val
+                        int trainEnd = (fold + 4) * foldSize; // 80% train
+                        var trainList = balancedTrainData.Take(trainEnd).ToList();
+                        var valList = balancedTrainData.Skip(trainEnd).Take(foldSize).ToList();
 
-            Console.WriteLine($"*************************************************");
-            Console.WriteLine($"* MicroAccuracy:    {metrics.MicroAccuracy:P2}");
-            Console.WriteLine($"* MacroAccuracy:    {metrics.MacroAccuracy:P2}");
-            Console.WriteLine($"* LogLoss:          {metrics.LogLoss:0.##}");
-            Console.WriteLine($"*************************************************");
-            Console.WriteLine(metrics.ConfusionMatrix.GetFormattedConfusionTable());
+                        if (trainList.Count == 0 || valList.Count == 0) continue;
+
+                        IDataView trainDataView = mlContext.Data.LoadFromEnumerable(trainList);
+                        IDataView valDataView = mlContext.Data.LoadFromEnumerable(valList);
+
+                        var pipeline = ModelTrainer.BuildTrainingPipeline(mlContext, trainDataView, numLeaves, numIterations);
+
+                        var model = pipeline.Fit(trainDataView);
+                        var predictions = model.Transform(valDataView);
+                        var metrics = mlContext.MulticlassClassification.Evaluate(predictions, "Label");
+
+                        avgLogLoss += metrics.LogLoss;
+                    }
+
+                    avgLogLoss /= numFolds;
+                    Console.WriteLine($"Params: Leaves={numLeaves}, Iterations={numIterations} | Avg LogLoss: {avgLogLoss:0.##}");
+
+                    if (avgLogLoss < bestLogLoss)
+                    {
+                        bestLogLoss = avgLogLoss;
+                        bestNumLeaves = numLeaves;
+                        bestNumIterations = numIterations;
+                    }
+                }
+            }
+
+            Console.WriteLine($"\nBest Params: Leaves={bestNumLeaves}, Iterations={bestNumIterations} | Best Avg LogLoss: {bestLogLoss:0.##}");
+
+            // Train final model on all balanced training data with best params
+            IDataView balancedTrainDataView = mlContext.Data.LoadFromEnumerable(balancedTrainData);
+            var finalPipeline = ModelTrainer.BuildTrainingPipeline(mlContext, balancedTrainDataView, bestNumLeaves, bestNumIterations);
+            bestModel = finalPipeline.Fit(balancedTrainDataView);
+
+            // Evaluate on balanced holdout (last 20% of training data - internal val)
+            int trainHoldoutStart = (int)(balancedTrainData.Count * 0.8);
+            var balancedTestList = balancedTrainData.Skip(trainHoldoutStart).ToList();
+            IDataView balancedTestData = mlContext.Data.LoadFromEnumerable(balancedTestList);
+            var balancedPredictions = bestModel.Transform(balancedTestData);
+            var balancedMetrics = mlContext.MulticlassClassification.Evaluate(balancedPredictions, "Label");
+
+            Console.WriteLine("\nEvaluating model performance on balanced (unseen internal) data...");
+            Console.WriteLine($"* MicroAccuracy:    {balancedMetrics.MicroAccuracy:P2}");
+            Console.WriteLine($"* MacroAccuracy:    {balancedMetrics.MacroAccuracy:P2}");
+            Console.WriteLine($"* LogLoss:          {balancedMetrics.LogLoss:0.##}");
+            Console.WriteLine(balancedMetrics.ConfusionMatrix.GetFormattedConfusionTable());
+
+            // Evaluate on true OOS (held-out last 20% of full data)
+            IDataView oosDataView = mlContext.Data.LoadFromEnumerable(oosFeaturedData);
+            var oosPredictions = bestModel.Transform(oosDataView);
+            var oosMetrics = mlContext.MulticlassClassification.Evaluate(oosPredictions, "Label");
+
+            Console.WriteLine("\nEvaluation on true OOS (held-out imbalanced) test set:");
+            Console.WriteLine($"* MicroAccuracy:    {oosMetrics.MicroAccuracy:P2}");
+            Console.WriteLine($"* MacroAccuracy:    {oosMetrics.MacroAccuracy:P2}");
+            Console.WriteLine($"* LogLoss:          {oosMetrics.LogLoss:0.##}");
+            Console.WriteLine(oosMetrics.ConfusionMatrix.GetFormattedConfusionTable());
 
             Console.WriteLine("Saving the trained model...");
-            mlContext.Model.Save(model, originalDataView.Schema, modelPath);
+            mlContext.Model.Save(bestModel, balancedTrainDataView.Schema, modelPath);
             Console.WriteLine($"Model saved to {modelPath}");
 
             Console.WriteLine("\n--- Process Complete ---");
         }
     }
 }
-

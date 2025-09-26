@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 namespace DataModels
 {
-    // Represents a single bar of market data from Polygon.io
+    /// <summary>
+    /// Represents a single bar of market data from Polygon.io
+    /// </summary>
     public class MarketBar
     {
         [JsonProperty("o")]
@@ -20,32 +22,28 @@ namespace DataModels
         public decimal Close { get; set; }
 
         [JsonProperty("v")]
-        public decimal Volume { get; set; }
+        public long Volume { get; set; }
 
         [JsonProperty("t")]
         public long Timestamp { get; set; }
 
         [JsonProperty("vw")]
-        public decimal? VolumeWeightedAveragePrice { get; set; } // Added vw
+        public decimal VolumeWeightedAveragePrice { get; set; } // Added vw
 
         [JsonProperty("n")]
-        public long? NumberOfTransactions { get; set; } // Added n
+        public long NumberOfTransactions { get; set; } // Added n
 
-        // Ensures that the timestamp is always treated as UTC
-        public DateTime Date => DateTimeOffset.FromUnixTimeMilliseconds(Timestamp).UtcDateTime;
+        // Ensures that the Timestamp is always treated as UTC
+        public DateTime Date { get; set; } // Updated: Made settable
     }
 
-    // Represents the response from the Polygon.io aggregates API
+    /// <summary>
+    /// Represents the response from the Polygon.io aggregates API
+    /// </summary>
     public class PolygonAggregatesResponse
     {
-        [JsonProperty("results")]
-        public List<MarketBar> Results { get; set; }
-
-        [JsonProperty("resultsCount")]
+        public string Ticker { get; set; }
         public int ResultsCount { get; set; }
-
-        [JsonProperty("status")]
-        public string Status { get; set; }
+        public List<MarketBar> Results { get; set; }
     }
 }
-
